@@ -1,0 +1,34 @@
+﻿@model List<MvcStok.Models.Entity.TBLSATISLAR>
+@{
+    ViewBag.Title = "SatisTablosu";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">SATIŞ ID</th>
+
+            <th scope="col">ÜRÜN ID</th>
+            <th scope="col">MÜŞTERİ ID</th>
+            <th scope="col">ADET</th>
+            <th scope="col">FİYAT</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var satis in Model)
+        {
+        <tr>
+            <th scope="row">@satis.SATISID</th>
+            <td>@satis.URUN</td>
+            <td>@satis.MUSTERI</td>
+            <td>@satis.ADET</td>
+            <td>@satis.FIYAT</td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+

@@ -1,0 +1,21 @@
+﻿@model MvcStok.Models.Entity.TBLKATEGORILER
+@{
+    ViewBag.Title = "kategoriGetir";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("kategoriGuncelle", "Kategori", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(k => k.KATEGORIID)
+        @Html.TextBoxFor(k => k.KATEGORIID, new { @class = "form-control" })
+        <br />
+        @Html.LabelFor(k => k.KATEGORIAD)
+        @Html.TextBoxFor(k => k.KATEGORIAD, new { @class = "form-control" })
+    </div>
+    <div>
+        <button class="btn btn-warning" onclick="return confirm('Kategoriyi güncellemek istediğinize emin misiniz?')">Kategori Güncelle</button>
+    </div>
+}

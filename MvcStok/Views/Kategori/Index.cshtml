@@ -1,0 +1,75 @@
+﻿﻿@using MvcStok.Models.Entity
+@using PagedList
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<TBLKATEGORILER>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>KATEGORİLER TABLOSU</h2>
+<br /> <br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">KATEGORİ ID</th>
+            <th scope="col">KATEGORİ ADI</th>
+            <th scope="col">SİL</th>
+            <th scope="col">GÜNCELLE</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kategori in Model)
+        {
+            <tr>
+                <th scope="row">@kategori.KATEGORIID</th>
+                <td>@kategori.KATEGORIAD</td>
+                <td><a href="/KATEGORI/kategoriSil/@kategori.KATEGORIID" class="deleteButton"><i class="fas fa-trash" style="color: red;  font-size: 16px;"></i></a></td>
+                <td><a href="/KATEGORI/KategoriGetir/@kategori.KATEGORIID"><i class="fas fa-pencil-alt" style="color: blue; font-size: 16px;"></i></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<br />
+<a href="/KATEGORI/YeniKategori/" class="btn btn-primary">YENİ KATEGORİ EKLE</a>
+
+<br />
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
+
+
+
+<!-- Silme Onay Modalı -->
+<div id="confirmDeleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal içeriği-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #f2dede; color: #a94442;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Silme İşlemi Onayı</h4>
+            </div>
+            <div class="modal-body">
+                <p style="color: #a94442;">Seçili kategoriyi silmek istediğinizden emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+                <a id="deleteConfirmButton" href="#" class="btn btn-danger">Sil</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".deleteButton").click(function (e) {
+                e.preventDefault(); 
+                var deleteUrl = $(this).attr("href"); 
+                $("#deleteConfirmButton").attr("href", deleteUrl); 
+                $("#confirmDeleteModal").modal("show"); 
+            });
+        });
+    </script>
+}

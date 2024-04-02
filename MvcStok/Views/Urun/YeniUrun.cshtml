@@ -1,0 +1,94 @@
+﻿@model MvcStok.Models.Entity.TBLURUNLER
+@{
+    ViewBag.Title = "YeniUrun";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<h2>Yeni Ürün Girişi</h2>
+<br /> <br />
+<form method="post" id="urunForm">
+    <div class="form-group row">
+        <label for="inputText3" class="col-sm-2 col-form-label" style="font-size: 20px;">Ürün Adı:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputText3" name="URUNAD" placeholder="Ürün Adını Giriniz" required="" maxlength="30">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputText3" class="col-sm-2 col-form-label" style="font-size: 20px;">Marka:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputText3" name="MARKA" placeholder="Markayı Giriniz" required="">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputText3" class="col-sm-2 col-form-label" style="font-size: 20px;">Ürün Kategorisi Seçiniz:</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(m => m.TBLKATEGORILER.KATEGORIID, (List<SelectListItem>)ViewBag.tasinanDegerler, new { @class = "form-control" })
+
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="inputText3" class="col-sm-2 col-form-label" style="font-size: 20px;">Fiyat:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputText3" name="FIYAT" placeholder="Ürün Fiyatı Giriniz" required="">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputText3" class="col-sm-2 col-form-label" style="font-size: 20px;">Stok Adet:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputText3" name="STOK" placeholder="Stok Adeti Giriniz" required="">
+        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button class="btn btn-primary" type="submit">Müşteriyi Ekle</button>
+        </div>
+    </div>
+</form>
+
+<!-- Başarılı Mesaj Modalı -->
+<div id="successModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal içeriği-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #28a745; color: #fff;">
+                <button type="button" class="close" data-dismiss="modal" style="color: #fff;"><span>&times;</span></button>
+                <h4 class="modal-title"><i class="fas fa-check-circle mr-2"></i> Başarılı</h4>
+            </div>
+            <div class="modal-body">
+                <p>Ürün başarıyla eklendi.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#urunForm").submit(function (event) {
+                event.preventDefault(); // Formun varsayılan gönderimini engelle
+                var formVerisi = $(this).serialize(); // Form verilerini serileştir
+                // AJAX isteğiyle form verisini gönder
+                $.ajax({
+                    type: "POST",
+                    url: "/URUN/YeniUrun", // Form verilerinin gönderileceği sunucu adresi
+                    data: formVerisi,
+                    success: function (response) {
+                        // İşlem başarılıysa, modalı göster
+                        $("#successModal").modal("show");
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu.");
+                    }
+                });
+            });
+        });
+    </script>
+}
